@@ -1,0 +1,26 @@
+# facility.severity     destination
+# -----------------     -----------
+# Note: The facility.severity and destination must be separated by tabs.
+#
+# Uncomment the following to log all messages to the /home/syslog.log file.
+*.emerg;*.debug;*.err;kern.*;*.info;*.alert                 /home/syslog.txt
+#
+# Uncomment the following to log all error messages
+# to the error.log file
+*.err                   /tmp/syslogd/error.log
+#
+# Uncomment the following to log all debug messages to tape
+#*.debug                 tape
+#
+# Uncomment the following to log all local0 informational messages
+# and local1 error messages to a remote host
+local0.info;local1.err  @remote.host.com
+#
+# Uncomment the following to log all daemon server debug messages
+# to the server.debug file
+daemon.debug            /home/syslog.txt
+#
+# Uncomment the following to log everything except local0, local1, and daemon
+# messages to the garbagecan.log file
+*.emerg;local0.none;local1.none;daemon.none   /tmp/syslogd/garbagecan.log
+
