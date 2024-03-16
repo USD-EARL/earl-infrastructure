@@ -3,7 +3,7 @@
 # Note: The facility.severity and destination must be separated by tabs.
 #
 # Uncomment the following to log all messages to the /home/syslog.log file.
-*.emerg;*.debug;*.err;kern.*;*.info;*.alert                 /home/syslog.txt
+*.*                /home/syslog.txt
 #
 # Uncomment the following to log all error messages
 # to the error.log file
