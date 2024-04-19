@@ -1,7 +1,7 @@
 import telnetlib
 import time
 
-Author: Raissa
+# Author: Raissa
 
 # Assuming 'target_device' is obtained from your previous TCP SYN scan
 # Right now, this IP has to be hardcoded
