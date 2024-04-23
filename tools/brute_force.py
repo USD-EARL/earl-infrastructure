@@ -11,10 +11,10 @@ import sys
 
 def main():
     # Prompt user for target device IP or hostname
-    target_device_ip = input("Enter the target device IP: ")
+    target_device_ip = sys.argv[1]
     
     # Prompt user for port number
-    port = input("Enter the port number: ")
+    port = sys.argv[2]
     
     try:
         # Convert port to an integer
