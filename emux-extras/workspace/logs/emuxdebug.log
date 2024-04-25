@@ -1,0 +1,24 @@
+[+] Parsing /emux/qemuopts
+VEXPRESS1|console=ttyAMA0 rw rootwait root=/dev/mmcblk0|if=sd,format=raw,index=0|console=ttyAMA0 rw rootwait root=/dev/mmcblk0|nic|tap,ifname=tap0,script=no,downscript=no|#
+VEXPRESS2|pty.legacy_count=16 console=ttyAMA0 rw root=/dev/mmcblk0 rootwait rootfstype=ext2|if=sd,format=raw|pty.legacy_count=16 console=ttyAMA0 rw root=/dev/mmcblk0 rootwait rootfstype=ext2|nic,model=lan9118|tap,ifname=tap0,script=no,downscript=no|#
+REALVIEW-EB|root=/dev/mmcblk0 rw rootwait console=ttyAMA0|if=sd,format=raw|root=/dev/mmcblk0 rw rootwait console=ttyAMA0|nic|tap,ifname=tap0,script=no,downscript=no|#
+VERSATILEPB|root=/dev/sda rw rootwait console=ttyAMA0,115200|if=scsi|root=/dev/sda rw rootwait console=ttyAMA0,115200|nic|tap,ifname=tap0,script=no,downscript=no|#
+MALTA2|root=/dev/hda rw rootwait console=ttyS0,115200|format=raw|root=/dev/hda rw rootwait console=ttyS0,115200|nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0#
+MALTA3|root=/dev/sda rw rootwait console=ttyS0,115200|format=raw|root=/dev/sda rw rootwait console=ttyS0,115200|nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0#
+[+] Parsing /emux/devices
+DV-ARM|arm|qemu-system-arm-7.2.0|realview-eb-mpcore|||256M|zImage-3.18.109-realview|if=sd,format=raw|root=/dev/mmcblk0 rw rootwait console=ttyAMA0 EMUX=DV-ARM||nic|tap,ifname=tap0,script=no,downscript=no||Damn Vulnerable ARM Router#
+DV-MIPSEL|mipsel|qemu-system-mipsel-7.2.0|malta|||128M|vmlinux-3.18.109-malta-le|format=raw|root=/dev/sda rw rootwait console=ttyS0,115200 EMUX=DV-MIPSEL||nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0|Damn Vulnerable MIPS Router (Little Endian)#
+DV-MIPSEB|mips|qemu-system-mips-7.2.0|malta|||128M|vmlinux-3.18.109-malta-be|format=raw|root=/dev/sda rw rootwait console=ttyS0,115200 EMUX=DV-MIPSEB||nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0|Damn Vulnerable MIPS Router (Big Endian)#
+PH0WNCTF|mipsel|qemu-system-mipsel-7.2.0|malta|||128M|vmlinux-3.18.109-malta-le|format=raw|root=/dev/sda rw rootwait console=ttyS0,115200 EMUX=PH0WNCTF||nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0|R0 Port Controller - Ph0wn 2021 CTF Challenge#
+TRI227WF|arm|qemu-system-arm-7.2.0|versatilepb|||128M|zImage-2.6.28-versatile-nothumb|if=scsi|root=/dev/sda rw rootwait console=ttyAMA0,115200 EMUX=TRI227WF||nic|tap,ifname=tap0,script=no,downscript=no||Trivision NC-227-WF IP Camera#
+AC15|arm|qemu-system-arm-7.2.0|vexpress-a9|||256M|zImage-2.6.39.4-vexpress|if=sd,format=raw|pty.legacy_count=16 console=ttyAMA0 rw root=/dev/mmcblk0 rootwait rootfstype=ext2 mtdparts=armflash:0x1000000(All),0x40000@0(Bootloader),0xf70000@0x40000(KernelFS),0xda632c@0x209cd4(RootFS),0x10000@0xfb0000(crash),0x10000@0xfc0000(Policy),0x10000@0xfd0000(CFM_BACKUP),0x10000@0xfe0000(CFM),0x10000@0xff0000(nvram)  EMUX=AC15|-drive file=/emux/AC15/flashmem/flash0.bin,if=pflash -drive file=/emux/AC15/flashmem/flash1.bin,if=pflash|nic,model=lan9118|tap,ifname=tap0,script=no,downscript=no||Tenda AC15 Wi-Fi Router#
+ARCHERC9|arm|qemu-system-arm-7.2.0|vexpress-a9|||256M|zImage-2.6.39.4-vexpress|if=sd,format=raw|pty.legacy_count=16 console=ttyAMA0 rw root=/dev/mmcblk0 rootwait rootfstype=ext2 EMUX=ARCHERC9||nic,model=lan9118|tap,ifname=tap0,script=no,downscript=no||Archer C9 Wi-Fi Router#
+DIR615C|mips|qemu-system-mips-7.2.0|malta|||128M|vmlinux-2.6.30.9-malta-be|format=raw|root=/dev/hda rw rootwait console=ttyS0,115200 EMUX=DIR615C||nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0|D-Link DIR615C Wi-Fi Router#
+DCS935L|mips|qemu-system-mips-7.2.0|malta|||128M|vmlinux-2.6.30.9-malta-be|format=raw|root=/dev/hda rw rootwait console=ttyS0,115200 EMUX=DCS935L||nic,model=pcnet|tap,ifname=tap0,script=no,downscript=no|-object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0|D-Link DCS-935L Camera#
+[+] QEMU Launch Command
+/emux/run/qemu-bin-x86_64/qemu-system-arm-7.2.0 -M realview-eb-mpcore  -m 256M -kernel /emux/DV-ARM/kernel/zImage-3.18.109-realview  -drive file=/emux/hostfs/hostfs-arm.ext2,if=sd,format=raw  -append "root=/dev/mmcblk0 rw rootwait console=ttyAMA0 EMUX=DV-ARM" -net nic -net tap,ifname=tap0,script=no,downscript=no  -no-reboot -nographic -serial mon:stdio -monitor tcp:127.0.0.1:55555,server,nowait
+[+] Checking if flash memory files need to be created for DV-ARM
+[+] mtdparts not present
+[+] Checking if rootfs needs to be extracted for DV-ARM
+[+] Extracting /emux/DV-ARM/rootfs-arm.tar.bz2
+[+] Done extracting

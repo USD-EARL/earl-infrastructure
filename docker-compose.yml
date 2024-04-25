@@ -42,6 +42,8 @@ services:
     depends_on:
       - elasticsearch
 
+  # TODO: add an emux setup instead of init.sh
+
   elasticsearch:
     build:
       context: elasticsearch/
@@ -124,32 +126,76 @@ services:
       - elasticsearch
 
   zeek:
-    image: zeek/zeek:latest
-    command: tail -f /dev/null
+    build:
+      context: zeek/
+    command: ["zeek", "-C", "-i", "eth0", "local"]
     volumes:
       - zeek-logs:/zeek/logs:rw
       - ./zeek/local.zeek:/usr/local/zeek/share/zeek/site/local.zeek:ro
     networks:
       mock_internet:
-        ipv4_address: 192.168.150.10
+        ipv4_address: 192.168.150.9
     # cap_add:
     #   - NET_ADMIN
+
+  # victim:
+  #   image: ubuntu:22.04
+  #   container_name: basic_ubuntu
+  #   command: tail -f /dev/null
+  #   networks:
+  #     mock_internet:
+  #       ipv4_address: 192.168.150.12
 
   caldera:
     build:
       context: caldera/
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+      - "8443:8443"
+      - "7010:7010"
+      - "7011:7011/udp"
+      - "7012:7012"
+      - "8853:8853"
+      - "8022:8022"
+      - "2222:2222"
+    volumes:
+      - ./caldera/caldera-iot/iot:/tools/caldera/plugins/iot:rw
+    command: "--insecure -l DEBUG"
     networks:
       management:
       mock_internet:
-        ipv4_address: 192.168.150.11
+        ipv4_address: 192.168.150.10
 
-  victim:
-    image: ubuntu:22.04
-    container_name: basic_ubuntu
-    command: tail -f /dev/null
+  emux:
+    image: docker.io/therealsaumil/emux:03-2023
+    container_name: emux-docker  # this name MUST match the name in emux-docker-shell
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/net/tun
+    volumes:
+      - harambe:/emux/:rw
+      - ./emux-extras/workspace:/home/r0/workspace
+    ports:
+    # These ports are mostly forwarded in the container (by socat) to the QEMU guest
+      - "20080:80"
+      - "20443:443"
+      - "28080:8080"
+      - "24433:4433"
+      - "9999:9999"
+    environment:
+      - "PORTFWD=20080:80,20443:443,28080:8080,24433:4433,9999:9999"
+    command: ["/bin/sh", "-c", "tail -f /dev/null"]
+    stop_signal: SIGTERM  # allows Ctrl-C to work for stopping the docker-compose container
     networks:
+      management:
       mock_internet:
-        ipv4_address: 192.168.150.12
+        ipv4_address: 192.168.150.20
+
 
 networks:
   mock_internet:
@@ -160,9 +206,12 @@ networks:
        - subnet: 192.168.150.0/24
          gateway: 192.168.150.1
   management:
-    driver: bridge
+    driver: host
+
 
 volumes:
   elasticsearch:
   zeek-logs:
   host-logs:
+  harambe:  # this is externally built from the emux repo
+    external: true
