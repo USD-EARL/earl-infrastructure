@@ -1,0 +1,3 @@
+[submodule "caldera/caldera-iot"]
+	path = caldera/caldera-iot
+	url = https://github.com/USD-EARL/caldera-iot
